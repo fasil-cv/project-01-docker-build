@@ -4,6 +4,9 @@ on:
   push:
     tags: [ 'v*.*.*' ]
 
+env:
+  VERSION: ${{ github.ref_name }}
+
 jobs:
 
   # Build the image
@@ -12,9 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set VERSION
-        run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_ENV
-          
       - name: build and tag
         run: |
           docker build -t fasilcv/myapp:"${VERSION}" .
