@@ -1,4 +1,4 @@
-name: Docker CI
+name: Docker CD
 
 on:
   push:
@@ -18,26 +18,38 @@ jobs:
       - name: build and tag
         run: |
           docker build -t fasilcv/myapp:"${VERSION}" .
-          docker tag fasilcv/myapp:"${VERSION}" myapp:latest
+          docker tag fasilcv/myapp:"${VERSION}" fasilcv/myapp:latest
+
+      - name: save image
+        run: docker save -o myapp.tar fasilcv/myapp:"${VERSION}"
+      
+      - uses: actions/upload-artifact@v4
+        with:
+          name: docker-image
+          path: myapp.tar
+  
   # Test the image
-  test1:
+  test-image:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Run tests"
-  test2:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "test-2"
-  test3:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "test-3"
+      - uses: actions/download-artifact@v4
+        with:
+          name: docker-image
+      - name: Load docker image
+        run: docker load -i myapp.tar
+
+      - name: Run docker image
+        run: |
+          docker run -d --name=myapp -p 8080:80 fasilcv/myapp:"${VERSION}"
+          sleep 3
+      
+      - name: Helath check
+        run: |
+          curl -f http://localhost:8080/healthz
   # Push image
   push:
-    needs: [ test1, test3 ]
+    needs: [ test-image ]
     runs-on: ubuntu-latest
     environment:
       name: production
