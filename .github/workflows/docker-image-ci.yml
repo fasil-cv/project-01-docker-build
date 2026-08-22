@@ -65,7 +65,7 @@ jobs:
           image-ref: '${{ env.APP_NAME }}:local'
           format: 'table'
           #exit-code: '0'   #make 1 exiting code to fail the pipeline, if one of the are reported.
-          ignore-unfixed: true
+          #ignore-unfixed: true
           severity: 'CRITICAL,HIGH,MEDIUM,LOW'
 
   Test-image-3:
