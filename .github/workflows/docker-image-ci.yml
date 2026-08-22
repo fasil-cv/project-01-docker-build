@@ -1,3 +1,4 @@
+# This is a sample workflow for building and testing a Docker image. can be used as a template for your own workflow.
 name: Docker CI
 
 on:
@@ -7,7 +8,7 @@ on:
     branches: [ "main" ]
 
 env:
-  APP_NAME: myapp
+  APP_NAME: myapp  #change this to your app name
 
 jobs:
   # Build the image
@@ -63,7 +64,7 @@ jobs:
         with:
           image-ref: '${{ env.APP_NAME }}:local'
           format: 'table'
-          exit-code: '0'   #make 1 exiting code to fail the pipeline, if one of the are reported.
+          #exit-code: '0'   #make 1 exiting code to fail the pipeline, if one of the are reported.
           ignore-unfixed: true
           severity: 'CRITICAL,HIGH,MEDIUM,LOW'
 
