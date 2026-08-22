@@ -11,7 +11,7 @@ env:
 
 jobs:
   # Build the image
-  build-image:
+  Build-image:
     runs-on: ubuntu-latest  
     steps:
       - uses: actions/checkout@v4
@@ -27,8 +27,8 @@ jobs:
           path: ${{ env.APP_NAME }}.tar
   
   # Test jobs
-  test-image:
-    needs: build-image
+  Test-image:
+    needs: Build-image
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
@@ -47,8 +47,8 @@ jobs:
           curl -f http://localhost:8080/healthz
   
   # Security scan image    
-  scan-image:
-    needs: build-image
+  Scan-image:
+    needs: Build-image
     runs-on: ubuntu-latest
     steps:
     
@@ -67,8 +67,8 @@ jobs:
           ignore-unfixed: true
           severity: 'CRITICAL,HIGH,MEDIUM,LOW'
 
-  test3:
-    needs: test-image
+  Test-image-3:
+    needs: Test-image
     runs-on: ubuntu-latest
     steps:
       - run: echo "test-3"
