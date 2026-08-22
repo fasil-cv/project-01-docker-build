@@ -10,7 +10,7 @@ env:
 jobs:
 
   # Build the image
-  build-image:
+  Build-image:
     runs-on: ubuntu-latest  
     steps:
       - uses: actions/checkout@v4
@@ -28,7 +28,7 @@ jobs:
           path: myapp.tar
   
   # Test the image
-  test-image:
+  Test-image:
     needs: build-image
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +48,7 @@ jobs:
           curl -f http://localhost:8080/healthz
 
   # Push image
-  push-image:
+  Push-image:
     needs: [ test-image ]
     runs-on: ubuntu-latest
     environment:
