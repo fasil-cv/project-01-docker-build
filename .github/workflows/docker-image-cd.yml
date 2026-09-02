@@ -49,7 +49,7 @@ jobs:
 
   # Security scan image    
   Scan-image:
-    needs: Build-image
+    needs: Test-image
     runs-on: ubuntu-latest
     steps:
     
