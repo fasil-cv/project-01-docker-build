@@ -57,12 +57,12 @@ jobs:
         with:
           name: docker-image
       - name: Load docker image
-        run: docker load -i ${{ env.APP_NAME }}.tar
+        run: docker load -i myapp.tar
 
       - name: Run Trivy scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: '${{ env.APP_NAME }}:local'
+          image-ref: fasilcv/myapp:local
           format: 'table'
           exit-code: '0'   #make 1 exiting code to fail the pipeline, if one of the are reported.
           #ignore-unfixed: true
